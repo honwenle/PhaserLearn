@@ -7,8 +7,11 @@ var pad, stick, buttonA, hero;
 function preload () {
     game.load.atlas('generic', 'images/generic-joystick.png', 'images/generic-joystick.json');
     game.load.image('hero', 'images/star.png');
+    game.load.image('background','images/background.jpg');
 }
 function create () {
+    game.add.tileSprite(0, 0, 1537, 1537, 'background');
+    game.world.setBounds(0, 0, 1537, 1537);
     // 插件
     game.physics.startSystem(Phaser.Physics.ARCADE);
     pad = game.plugins.add(Phaser.VirtualJoystick);
@@ -21,8 +24,11 @@ function create () {
     buttonA = pad.addButton(700, 520, 'generic', 'button1-up', 'button1-down');
     buttonA.onDown.add(pressButtonA, this);
     // 英雄
-    hero = game.add.sprite(game.world.width/2, game.world.height/2, 'hero');
+    hero = game.add.sprite(game.world.centerX, game.world.centerY, 'hero');
     game.physics.arcade.enable(hero);
+    hero.body.collideWorldBounds = true;
+
+    game.camera.follow(hero);
 }
 function update () {
     if (stick.isDown) {
