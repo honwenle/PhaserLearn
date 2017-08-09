@@ -3,12 +3,13 @@ var game = new Phaser.Game('100%', '100%', Phaser.AUTO, '', {
     create: create,
     update: update
 });
-var pad, stick, buttonA, hero, terrains;
+var pad, stick, buttonA, hero, terrains, weapon1;
 function preload () {
     game.load.atlas('generic', 'images/generic-joystick.png', 'images/generic-joystick.json');
     game.load.spritesheet('hero', 'images/timg.png', 100, 100);
     game.load.image('background','images/map.jpg');
     game.load.image('glados','images/glados.png');
+    game.load.image('star','images/star.png');
 }
 function create () {
     // 插件
@@ -43,24 +44,28 @@ function create () {
     game.physics.arcade.enable(hero);
     hero.body.collideWorldBounds = true;
     hero.scale.set(0.8);
+    hero.anchor.set(0.5);
     hero.animations.add('run', [0,1,2,3,4,5,6,7,8,9,10,11], 10, true);
-
+    
     game.camera.follow(hero);
+
+    // 普攻
+
 }
 function update () {
     game.physics.arcade.collide(hero, terrains);
     if (stick.isDown) {
         game.physics.arcade.velocityFromRotation(
             stick.rotation,
-            400,
+            200,
             hero.body.velocity
         );
         hero.animations.play('run');
+        hero.rotation = stick.rotation;
     } else {
         hero.body.velocity.set(0);
         hero.animations.stop();
     }
 }
 function pressButtonA () {
-    console.log('A');
 }
