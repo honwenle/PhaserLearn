@@ -27,24 +27,25 @@ function create() {
 
     emitter.makeParticles( [ 'fire1', 'fire2', 'fire3', 'smoke' ] );
 
-    emitter.gravity = 200;
-    emitter.setAlpha(1, 0, 3000);
-    emitter.setScale(0.8, 0, 0.8, 0, 3000);
+    // emitter.gravity = 0;
+    emitter.setAlpha(.5, 0, 3000);
+    emitter.setScale(.8, 0, .8, 0, 1500);
 
-    emitter.start(false, 3000, 5);
+    emitter.start(false, 1500, 5);
 
-    sprite = game.add.sprite(0, 300, 'ball', 0);
+    sprite = game.add.sprite(200, 300, 'ball', 0);
 
     game.physics.arcade.enable(sprite);
 
-    game.physics.arcade.gravity.y = 150;
+    game.physics.arcade.gravity.y = 200;
     game.physics.arcade.checkCollision.left = false;
     game.physics.arcade.checkCollision.right = false;
 
     sprite.body.setSize(80, 80, 0, 0);
     sprite.body.collideWorldBounds = true;
     sprite.body.bounce.set(1);
-    sprite.body.velocity.set(300, 200);
+    // sprite.body.velocity.set(300, 200);
+    sprite.body.gravity.y = -200;
 
     sprite.inputEnabled = true;
 
@@ -66,8 +67,8 @@ function update() {
     var px = sprite.body.velocity.x;
     var py = sprite.body.velocity.y;
 
-    px *= -1;
-    py *= -1;
+    // px *= -1;
+    // py *= -1;
 
     emitter.minParticleSpeed.set(px, py);
     emitter.maxParticleSpeed.set(px, py);
